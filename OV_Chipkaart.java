@@ -24,7 +24,7 @@ public class OV_Chipkaart {
 		reiziger.addKaart(this);
 	}
 	
-	public OV_Chipkaart(int kaarNummer, String geldigTot, int klasse, double saldo, Reiziger reiziger) {
+	public OV_Chipkaart(int kaarNummer, String geldigTot, int klasse, double saldo, hibernate.Reiziger reiziger) {
 		this.kaartNummer = kaarNummer;
 		this.geldigTot = geldigTot;
 		this.klasse = klasse;
@@ -88,6 +88,7 @@ public class OV_Chipkaart {
 
 	public void setProducten(ArrayList<Product> producten) {
 		this.producten = producten;
+
 	}
 
 	@Override

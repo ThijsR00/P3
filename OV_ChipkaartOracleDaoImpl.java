@@ -39,6 +39,21 @@ public class OV_ChipkaartOracleDaoImpl extends OracleBaseDao implements OV_Chipk
 		conn.close();
 		return alleOV_ChipkaartenVanReiziger;
 	}
+	public ArrayList<Integer> findByProductnummer(int productnummer)
+			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
+		OracleBaseDao.getConnection();
+		Statement stmt = conn.createStatement();
+		String queryText = "SELECT * FROM OV_CHIPKAART_PRODUCT WHERE productnummer = " + productnummer;
+		ResultSet rs = stmt.executeQuery(queryText);
+		ArrayList<Integer> kaarten = new ArrayList<Integer>();
+		while (rs.next()) {
+			kaarten.add(rs.getInt(1));
+		}
+		rs.close();
+		stmt.close();
+		conn.close();
+		return kaarten;
+	}
 
 	public OV_Chipkaart save(OV_Chipkaart ov_chipkaart)
 			throws SQLException, InstantiationException, IllegalAccessException, ClassNotFoundException {
@@ -81,8 +96,10 @@ public class OV_ChipkaartOracleDaoImpl extends OracleBaseDao implements OV_Chipk
 		ov_chipkaart.getReiziger().deleteKaart(ov_chipkaart);
 		OracleBaseDao.getConnection();
 		Statement stmt = conn.createStatement();
-		String queryText = "DELETE FROM OV_CHIPKAART WHERE kaartnummer = " + ov_chipkaart.getKaartNummer();
+		String queryText = "DELETE FROM ov_chipkaart_product WHERE kaartnummer = " + ov_chipkaart.getKaartNummer();
 		stmt.executeQuery(queryText);
+		String queryText2 = "DELETE FROM OV_CHIPKAART WHERE kaartnummer = " + ov_chipkaart.getKaartNummer();
+		stmt.executeQuery(queryText2);
 		
 		stmt.close();
 		conn.close();
